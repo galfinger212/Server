@@ -10,7 +10,9 @@ const authRoute = require("./routes/auth");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const path = require("path");
-const io = require("./Socket/Socket");
+const cors = require('cors')
+const io = require("./Socket/socket");
+
 dotenv.config();
 
 mongoose.connect(
@@ -26,7 +28,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
-//app.use(io);
+app.use(cors());
 
 app.use("/api/auth", authRoute);
 app.use("/api/board", boardRoute);
