@@ -11,7 +11,6 @@ const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const path = require("path");
 const cors = require('cors')
-const io = require("./Socket/socket");
 
 dotenv.config();
 
@@ -29,7 +28,14 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.removeHeader('x-powered-by');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
 
+    next();
+});
 app.use("/api/auth", authRoute);
 app.use("/api/board", boardRoute);
 app.use("/api/users", userRoute);

@@ -1,9 +1,13 @@
-const app = require('./app.js')
+const app = require('./app.js');
 const server = app.listen(8080, () => {
   console.log("Backend server is running!");
 });
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: '*'
+  }
+});
 
 let users = [];
 const addUser = (userId, socketId) => {
